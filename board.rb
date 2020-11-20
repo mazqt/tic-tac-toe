@@ -8,7 +8,7 @@ class Board
       @board[coordinate[0]][coordinate[1]] = player
       return true
     else
-      puts "Oops, you either formatted your answer wrongly or chose and invalid space. Enter it again!"
+      puts "Oops, that coordinate is already taken."
       return false
     end
   end

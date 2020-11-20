@@ -1,6 +1,3 @@
-require './player.rb'
-require './board.rb'
-
 class Game
   def initialize(player1, symbol1, player2, symbol2)
     @player1 = Player.new(player1, symbol1)
@@ -10,7 +7,9 @@ class Game
   end
 
   def play()
-    puts "Let's play Tic Tac Toe!"
+    valid_coordinates = ["0", "1", "2"]
+
+    puts "Now let's play some Tic Tac Toe!"
 
     while !(@board.win? || @board.tie?)
       if @current_player != @player1
@@ -25,23 +24,36 @@ class Game
 
 
       coordinate = gets.chomp.split
+
+      while !(valid_coordinates.include?(coordinate[0]) && valid_coordinates.include?(coordinate[1]))
+        puts "Oops, you formatted your answer wrong!"
+        coordinate = gets.chomp.split
+      end
+
       coordinate[0] = coordinate[0].to_i
       coordinate[1] = coordinate[1].to_i
 
-      while !(@board.place_mark(@current_player.symbol, coordinate))
+      while !@board.place_mark(@current_player.symbol, coordinate)
         coordinate = gets.chomp.split
+
+        while !(valid_coordinates.include?(coordinate[0]) && valid_coordinates.include?(coordinate[1]))
+          puts "Oops, you formatted your answer wrong!"
+          coordinate = gets.chomp.split
+        end
+
         coordinate[0] = coordinate[0].to_i
         coordinate[1] = coordinate[1].to_i
       end
 
-      @board.display_board
     end
+
+    @board.display_board
 
     if @board.win?
       puts "Congratulations #{@current_player.name}! You won!"
     else
+      @board = Board.new()
       puts "It's a tie! Maybe you've time for a rematch?"
     end
-
   end
 end
