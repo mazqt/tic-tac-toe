@@ -7,7 +7,6 @@ class Game
   end
 
   def play()
-    valid_coordinates = ["0", "1", "2"]
 
     puts "Now let's play some Tic Tac Toe!"
 
@@ -23,26 +22,10 @@ class Game
       @board.display_board
 
 
-      coordinate = gets.chomp.split
-
-      while !(valid_coordinates.include?(coordinate[0]) && valid_coordinates.include?(coordinate[1]))
-        puts "Oops, you formatted your answer wrong!"
-        coordinate = gets.chomp.split
-      end
-
-      coordinate[0] = coordinate[0].to_i
-      coordinate[1] = coordinate[1].to_i
+      coordinate = get_coordinates()
 
       while !@board.place_mark(@current_player.symbol, coordinate)
-        coordinate = gets.chomp.split
-
-        while !(valid_coordinates.include?(coordinate[0]) && valid_coordinates.include?(coordinate[1]))
-          puts "Oops, you formatted your answer wrong!"
-          coordinate = gets.chomp.split
-        end
-
-        coordinate[0] = coordinate[0].to_i
-        coordinate[1] = coordinate[1].to_i
+        coordinate = get_coordinates()
       end
 
     end
@@ -56,4 +39,24 @@ class Game
       puts "It's a tie! Maybe you've time for a rematch?"
     end
   end
+
+  private
+
+  def get_coordinates
+    valid_coordinates = ["0", "1", "2"]
+
+    coordinate = gets.chomp.split
+
+      while !(valid_coordinates.include?(coordinate[0]) && valid_coordinates.include?(coordinate[1]))
+        puts "Oops, you formatted your answer wrong!"
+        coordinate = gets.chomp.split
+      end
+
+      coordinate[0] = coordinate[0].to_i
+      coordinate[1] = coordinate[1].to_i
+    return coordinate
+  end
+
 end
+
+
